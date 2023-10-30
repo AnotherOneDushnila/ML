@@ -1,5 +1,5 @@
 # ML
-This repository consists of consists of theory and practice in ML
+This repository consists of theory and practice in ML
 
 1. Data - папка с датасетами.
 2. Matplotlib&Seaborn - папка по библиотекам Matplotlib и Seaborn. Практика будет в проектах по EDA в папке Pandas.
