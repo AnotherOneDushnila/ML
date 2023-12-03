@@ -4,9 +4,8 @@ import numpy as np
 
 class LinearRegression():
     
-    def __init__(self, learning_rate = 0.1, tol = 0.01) -> None:
+    def __init__(self, learning_rate = 0.1) -> None:
         self.learning_rate = learning_rate
-        self.tol = tol 
         self.Loss = Loss_Functions()
         self.weight_list = []
         self.score_list = []
@@ -32,8 +31,8 @@ class LinearRegression():
     
 class RegularizedLinearRegression(LinearRegression):
     
-    def __init__(self, learning_rate = 0.1, tol=0.01, mode = int, alpha = float) -> None:
-        super().__init__(learning_rate, tol)
+    def __init__(self, learning_rate = 0.1, mode = int, alpha = float) -> None:
+        super().__init__(learning_rate)
         self.mode = mode
         self.alpha = alpha
 
