@@ -10,7 +10,7 @@ class L1_Regularization:
     def __call__(self, weights : List[float]) -> float:
         self.weights = weights
 
-        return sum(abs(self.weights))
+        return self.alpha*(sum(abs(self.weights)))
     
 class L2_Regularization:
 
@@ -20,4 +20,4 @@ class L2_Regularization:
     def __call__(self, weights : List[float]) -> float:
         self.weights = weights
 
-        return np.sqrt(sum(np.square(self.weights)))
+        return self.alpha*(np.sqrt(sum(np.square(self.weights))))
