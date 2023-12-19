@@ -1,27 +1,96 @@
 import numpy as np
-from Utils.ClassificationLoss import Loss_functions
+import abc
 
-class LogisticRegression:
 
-    def __init__(self, learning_rate = 0.1, alpha = float, mode = int,fit_intercept = True) -> None:
+
+# Short description for class and methods
+class BaseLogRegDoc(abc.ABC):
+
+    @abc.abstractmethod
+    def __init__():
+        """Method which basic hyperparameters are set.
+
+        Parameters
+        --------------------------------------------------
+        `learning_rate : float`
+         Model learning speed
+
+        `fit_intercept : bool`
+         Adding a free weight to the sample
+
+        `mode : int {0;1;2}`
+         Choose a mode of regularization:
+
+         0 - Without regularization
+
+         1 - Lasso
+
+         2 - Ridge
+
+        `Loss : class object`
+         RegressionLoss class object
+
+        `weight_list : List[float]`
+         Empty list for weights
+
+        `Returns : None`
+        """
+
+        raise NotImplementedError
+    
+    @abc.abstractmethod
+    def fit():
+        """Method which builds and optimizes the weights.
+
+        Parameters
+        ----------------------------------------------------
+        `X : Any`
+         Training features
+
+        `y : Any`
+         Training targets
+
+        `Returns : final weights`
+        """
+
+        raise NotImplementedError
+
+    @abc.abstractmethod  
+    def predict():
+        """Method that makes the prediction.
+
+        Parameters
+        -----------------------------------------------------
+        `X : Any`
+         Test features
+        
+        `Returns : prediction`
+        """
+        raise NotImplementedError
+# Short description for class and methods
+
+
+class LogisticRegression(BaseLogRegDoc):
+
+    def __init__(self, learning_rate = 0.1, alpha = float, mode = int, fit_intercept = True) -> None:
         self.learning_rate = learning_rate
         self.alpha = alpha
         self.mode = mode
         self.fit_intercept = fit_intercept
-        self.Loss = Loss_functions()
         self.weight_list = []
 
     def fit(self, X, y):
-        X = np.concatenate((np.ones((X.shape[0], 1)), X), axis = 1)
+        if self.fit_intercept:
+            X = np.concatenate((np.ones((X.shape[0], 1)), X), axis = 1)
         n_samples, n_features = X.shape
         self.weight_list = np.zeros(n_features)
 
         # gradient decent
         for _ in range(n_features):
             prediction = X.dot(self.weight_list)
-            prediction = 1 / (1+np.exp(-prediction))
+            prediction = 1 / (1 + np.exp(-prediction))
             error = prediction - y 
-            grad_w = 2/n_samples * X.T.dot(error)  
+            grad_w = 2/n_samples * X.T.dot(error)
             self.weight_list -= self.learning_rate * grad_w
 
         # Lasso
@@ -41,7 +110,9 @@ class LogisticRegression:
 
 
     def predict(self, X):
-        X = np.concatenate((np.ones((X.shape[0], 1)), X), axis = 1)
+        assert hasattr(self, "weight_list"), "Logistic regression must be fitted first"
+        if self.fit_intercept:
+            X = np.concatenate((np.ones((X.shape[0], 1)), X), axis = 1)
         prediction = X.dot(self.weight_list)
         prediction = 1 / (1 + np.exp(-prediction))
         classes = [0 if i < 0.5 else 1 for i in prediction]
