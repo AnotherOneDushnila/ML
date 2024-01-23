@@ -1,3 +1,5 @@
 Work/
 **/__pycache__/
 __pycache__/
+Practical_Work/Models/DecisionTree.py
+Practical_Work/Tests/DecisionTree_tests.ipynb

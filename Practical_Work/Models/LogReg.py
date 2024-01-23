@@ -18,14 +18,8 @@ class BaseLogRegDoc(abc.ABC):
         `fit_intercept : bool`
          Adding a free weight to the sample
 
-        `mode : int {0;1;2}`
+        `regularization : bool`
          Choose a mode of regularization:
-
-         0 - Without regularization
-
-         1 - Lasso
-
-         2 - Ridge
 
         `Loss : class object`
          RegressionLoss class object
@@ -72,10 +66,10 @@ class BaseLogRegDoc(abc.ABC):
 
 class LogisticRegression(BaseLogRegDoc):
 
-    def __init__(self, learning_rate = 0.1, alpha = float, mode = int, fit_intercept = True) -> None:
+    def __init__(self, learning_rate = 0.1, alpha = float, regularization = bool, fit_intercept = True) -> None:
         self.learning_rate = learning_rate
         self.alpha = alpha
-        self.mode = mode
+        self.regularization = regularization
         self.fit_intercept = fit_intercept
         self.weight_list = []
 
@@ -93,14 +87,8 @@ class LogisticRegression(BaseLogRegDoc):
             grad_w = 2/n_samples * X.T.dot(error)
             self.weight_list -= self.learning_rate * grad_w
 
-        # Lasso
-        if self.mode == 1:
-            pass
-
-        # Пока не понятно, что делать т.к общего аналитического решения не нахожу
-
         # Ridge
-        elif self.mode == 2:
+        if self.regularization == True:
             if self.alpha != 0:
                 lambdaI = self.alpha * np.eye(X.shape[1])
                 if self.fit_intercept:

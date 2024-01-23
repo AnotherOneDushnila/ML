@@ -4,6 +4,7 @@ import numpy as np
 
 
 # Short description for class and methods
+# ᕕ(╭ರ╭ ͟ʖ╮•́)⊃¤=(————
 class BaseKNNClassifierDoc(abc.ABC):
 
     @abc.abstractmethod
@@ -32,33 +33,6 @@ class BaseKNNClassifierDoc(abc.ABC):
         `Returns: final weights`
         """
 
-        raise NotImplementedError
-    
-    @abc.abstractmethod
-    def most_common():
-        """Method that finds the most common class.
-
-        Parameters
-        ----------------------------------------------------
-        `y : Any`
-         Training targets
-
-        `Returns: most common class`
-        """
-
-        raise NotImplementedError
-    
-    @abc.abstractmethod
-    def find_labels():
-        """Method that finds k nearest objects.
-
-        Parameters
-        ----------------------------------------------------
-        `x : Any`
-         Training targets
-
-        `Returns : most common class`
-        """
         raise NotImplementedError
     
     @abc.abstractmethod
@@ -104,33 +78,6 @@ class BaseKNNRegressorDoc(abc.ABC):
         raise NotImplementedError
     
     @abc.abstractmethod
-    def most_common():
-        """Method that finds the most common object.
-
-        Parameters
-        ----------------------------------------------------
-        `y : Any`
-         Training targets
-
-        `Returns: most common object`
-        """
-
-        raise NotImplementedError
-    
-    @abc.abstractmethod
-    def find_labels():
-        """Method that finds k nearest objects.
-
-        Parameters
-        ----------------------------------------------------
-        `x : Any`
-         Training targets
-
-        `Returns : most common object`
-        """
-        raise NotImplementedError
-    
-    @abc.abstractmethod
     def predict():
         """Method that makes the prediction.
 
@@ -142,6 +89,7 @@ class BaseKNNRegressorDoc(abc.ABC):
         `Returns: prediction`
         """
         raise NotImplementedError
+# ᕕ(╭ರ╭ ͟ʖ╮•́)⊃¤=(————
 # Short description for class and methods
 
 
@@ -156,19 +104,37 @@ class KNN_Classifier(BaseKNNClassifierDoc):
         self.X_train = X
         self.y_train = y
     
-    def most_common(self, y):
+    def __most_common(self, y):
+        """Method that finds the most common class.
+
+        Parameters
+        ----------------------------------------------------
+        `y : Any`
+         Training targets
+
+        `Returns: most common class`
+        """
         labels = np.unique(y)
         count = [list(y).count(i) for i in labels]
         return labels[np.argmax(count)]
     
-    def find_labels(self, x):
+    def __find_labels(self, x):
+        """Method that finds k nearest objects.
+
+        Parameters
+        ----------------------------------------------------
+        `x : Any`
+         Training targets
+
+        `Returns : most common object`
+        """
         distances = [euclidian_distance(x, x_train) for x_train in self.X_train]
         k_nearest = np.argsort(distances)[:self.k] 
         labels = [self.y_train[i] for i in k_nearest]
-        return self.most_common(labels)
+        return self.__most_common(labels)
 
     def predict(self, X_test):
-        labels = [self.find_labels(x) for x in X_test]
+        labels = [self.__find_labels(x) for x in X_test]
         return np.array(labels)
 
 
@@ -183,15 +149,33 @@ class KNN_Regressor(BaseKNNRegressorDoc):
         self.X_train = X
         self.y_train = y
     
-    def most_common(self, y):
+    def __most_common(self, y):
+        """Method that finds the most common object.
+
+        Parameters
+        ----------------------------------------------------
+        `y : Any`
+         Training targets
+
+        `Returns: most common object`
+        """
         return np.sum(y)/len(y)
     
-    def find_labels(self, x):
+    def __find_labels(self, x):
+        """Method that finds k nearest objects.
+
+        Parameters
+        ----------------------------------------------------
+        `x : Any`
+         Training targets
+
+        `Returns : most common object`
+        """
         distances = [euclidian_distance(x, x_train) for x_train in self.X_train]
         k_nearest = np.argsort(distances)[:self.k] 
         labels = [self.y_train[i] for i in k_nearest]
-        return self.most_common(labels)
+        return self.__most_common(labels)
     
     def predict(self, X_test):
-        labels = [self.find_labels(x) for x in X_test]
+        labels = [self.__find_labels(x) for x in X_test]
         return np.array(labels)

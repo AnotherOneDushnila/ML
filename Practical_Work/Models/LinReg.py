@@ -4,6 +4,7 @@ import numpy as np
 
 
 # Short description for classes and methods
+# ᕕ(╭ರ╭ ͟ʖ╮•́)⊃¤=(————
 class LinRegDoc(abc.ABC):
 
     @abc.abstractmethod
@@ -174,6 +175,7 @@ class LassoRegDoc(abc.ABC):
         `Returns : prediction`
         """
         raise NotImplementedError
+# ᕕ(╭ರ╭ ͟ʖ╮•́)⊃¤=(————
 # Short description for classes and methods
 
 
