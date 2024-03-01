@@ -15,7 +15,6 @@ class Plot:
             ) -> sns.heatmap:
 
 
-
         if only_numeric:
 
             numeric_col = list(data.select_dtypes(include=['int64']).columns)+list(data.select_dtypes(include=['float64']).columns)
