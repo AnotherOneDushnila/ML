@@ -66,7 +66,7 @@ class BaseLogRegDoc(abc.ABC):
 
 class LogisticRegression(BaseLogRegDoc):
 
-    def __init__(self, learning_rate = 0.1, alpha = float, regularization = bool, fit_intercept = True) -> None:
+    def __init__(self, learning_rate : float = 0.1, alpha : float = None, regularization : bool = False, fit_intercept : bool = True) -> None:
         self.learning_rate = learning_rate
         self.alpha = alpha
         self.regularization = regularization
@@ -88,7 +88,7 @@ class LogisticRegression(BaseLogRegDoc):
             self.weight_list -= self.learning_rate * grad_w
 
         # Ridge
-        if self.regularization == True:
+        if self.regularization:
             if self.alpha != 0:
                 lambdaI = self.alpha * np.eye(X.shape[1])
                 if self.fit_intercept:

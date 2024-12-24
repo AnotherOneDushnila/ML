@@ -28,11 +28,9 @@ class Loss_functions:
     def Impurity_function(self, y) -> np.float64:
         one = []
         zero = []
-        for i in y:
-            if i == 1:
-                one.append(i)
-            else:
-                zero.append(i)
+        
+        [one.append(i) if i == 1 else zero.append(i) for i in y]
+        
         return self.Gini(y) - (len(one)/len(y)) * self.Gini(one) - (len(zero)/len(y)) * self.Gini(zero)
     
 
