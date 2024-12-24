@@ -181,7 +181,7 @@ class LassoRegDoc(abc.ABC):
 
 class LinearRegression(LinRegDoc):
     
-    def __init__(self, learning_rate = 0.1, fit_intercept = True) -> None:
+    def __init__(self, learning_rate : float = 0.1, fit_intercept : bool = True) -> None:
         self.learning_rate = learning_rate
         self.fit_intercept = fit_intercept
         self.Loss = Loss_Functions()
@@ -211,7 +211,7 @@ class LinearRegression(LinRegDoc):
 
 class RidgeRegression(RidgeRegDoc):
     
-    def __init__(self, learning_rate = 0.1, fit_intercept = True, alpha = float) -> None:
+    def __init__(self, learning_rate : float = 0.1, fit_intercept : bool = True, alpha : float = None) -> None:
         self.learning_rate = learning_rate
         self.fit_intercept = fit_intercept
         self.alpha = alpha
